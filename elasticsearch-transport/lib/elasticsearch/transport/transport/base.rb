@@ -118,7 +118,7 @@ module Elasticsearch
         def __trace(method, path, params, body, url, response, json, took, duration)
           trace_url  = "http://localhost:9200/#{path}?pretty" +
                        ( params.empty? ? '' : "&#{::Faraday::Utils::ParamsHash[params].to_query}" )
-          trace_body = body ? " -d '#{__convert_to_json(body, :pretty => true)}'" : ''
+          trace_body = body ? " -d '#{__convert_to_json(body, :pretty => false)}'" : ''
           tracer.debug "# #{Time.now.iso8601} [#{response.status}] (#{format('%.3f', duration)}s)\n#"
           tracer.info  "curl -X #{method.to_s.upcase} '#{trace_url}'#{trace_body}\n"
           # tracer.debug json ? serializer.dump(json, :pretty => true).gsub(/^/, '# ').sub(/\}$/, "\n# }")+"\n" : "# #{response.body}\n"
